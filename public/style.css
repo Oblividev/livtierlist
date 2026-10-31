@@ -1,0 +1,335 @@
+:root {
+  --velvet: #2B1030;
+  --velvet-deep: #1F0A23;
+  --velvet-raised: #3A1843;
+  --thread: #FF5FA2;
+  --paper: #FBEAF2;
+  --paper-dim: #CDB3C6;
+
+  --card-w: 96px;
+  --card-h: 128px;
+  --tag-w: 104px;
+
+  font-family: "Rubik", system-ui, sans-serif;
+  color: var(--paper);
+  background: var(--velvet);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 40px clamp(16px, 4vw, 48px) 64px;
+  line-height: 1.5;
+}
+
+body.is-dragging { cursor: grabbing; user-select: none; }
+
+button { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--thread);
+  outline-offset: 3px;
+}
+
+/* Header */
+
+.masthead,
+.banner,
+#board {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+h1 {
+  margin: 0;
+  font-family: "Shrikhand", "Rubik", serif;
+  font-weight: 400;
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 0.95;
+  color: var(--thread);
+}
+
+.sub {
+  margin: 8px 0 0;
+  font-size: 1.375rem;
+  font-weight: 500;
+}
+
+.help {
+  margin: 6px 0 0;
+  max-width: 56ch;
+  color: var(--paper-dim);
+}
+
+.actions,
+.banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 18px;
+  border: 2px solid var(--paper-dim);
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn:hover { border-color: var(--paper); }
+
+.btn-primary {
+  border-color: var(--thread);
+  background: var(--thread);
+  color: var(--velvet-deep);
+}
+
+.btn-primary:hover { border-color: var(--paper); }
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border: 2px dashed var(--thread);
+  border-radius: 12px;
+}
+
+.banner p { margin: 0; font-weight: 500; }
+
+/* Tiers */
+
+.tiers {
+  border-radius: 16px;
+  background: var(--velvet-deep);
+}
+
+.tier {
+  display: grid;
+  grid-template-columns: var(--tag-w) 1fr;
+  align-items: stretch;
+  padding: 10px 10px 10px 0;
+}
+
+.tier + .tier {
+  border-top: 2px dashed rgba(255, 95, 162, 0.22);
+}
+
+/* Each tier label is a garment tag: notched end, punched hole, stitched edge. */
+.tag {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-height: calc(var(--card-h) + 4px);
+  margin-left: 10px;
+  padding-left: 18px;
+  background: var(--tier-color);
+  color: var(--velvet-deep);
+  clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+  border-radius: 0 10px 10px 0;
+}
+
+.tag::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: var(--velvet-deep);
+}
+
+.tag::after {
+  content: "";
+  position: absolute;
+  inset: 6px 6px 6px 30px;
+  border: 2px dashed rgba(31, 10, 35, 0.35);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.tag-label {
+  font-family: "Shrikhand", "Rubik", serif;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.tag-count {
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.zone {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+  min-height: calc(var(--card-h) + 4px);
+  padding: 2px 2px 2px 12px;
+}
+
+.zone:empty::before {
+  content: attr(data-empty);
+  align-self: center;
+  color: var(--paper-dim);
+  opacity: 0.6;
+}
+
+/* Unranked */
+
+.rack {
+  margin-top: 28px;
+}
+
+.rack h2 {
+  margin: 0 0 12px;
+  font-size: 1.375rem;
+  font-weight: 500;
+}
+
+.rack-count {
+  margin-left: 6px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--paper-dim);
+}
+
+.rack .zone {
+  padding: 12px;
+  border: 2px dashed rgba(255, 95, 162, 0.22);
+  border-radius: 16px;
+}
+
+/* Cards */
+
+.card {
+  position: relative;
+  display: block;
+  flex: none;
+  width: var(--card-w);
+  height: var(--card-h);
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--velvet-raised);
+  cursor: grab;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.card-fallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding-bottom: 22px;
+  font-family: "Shrikhand", "Rubik", serif;
+  font-size: 1.75rem;
+  color: var(--thread);
+}
+
+.card-fallback:only-child {
+  padding-bottom: 0;
+}
+
+.card-name {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3px 6px;
+  background: rgba(31, 10, 35, 0.86);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card.is-placeholder {
+  opacity: 0.25;
+  outline: 2px dashed var(--thread);
+  outline-offset: -2px;
+}
+
+.card.ghost {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  pointer-events: none;
+  cursor: grabbing;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+  rotate: -3deg;
+}
+
+.card.just-dropped {
+  animation: settle 220ms ease-out;
+}
+
+@keyframes settle {
+  0% { scale: 1.08; }
+  100% { scale: 1; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --card-w: 72px;
+    --card-h: 96px;
+    --tag-w: 72px;
+  }
+
+  body { padding-top: 28px; }
+
+  .tag { padding-left: 14px; clip-path: polygon(14px 0, 100% 0, 100% 100%, 14px 100%, 0 calc(100% - 14px), 0 14px); }
+  .tag::before { left: 7px; width: 8px; height: 8px; margin-top: -4px; }
+  .tag::after { inset: 5px 5px 5px 20px; }
+  .tag-label { font-size: 1.75rem; }
+  .zone { padding-left: 8px; gap: 6px; }
+  .card-name { font-size: 0.6875rem; padding: 2px 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card.just-dropped { animation: none; }
+  .card.ghost { rotate: none; }
+}

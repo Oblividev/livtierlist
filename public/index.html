@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Obliviosa cosplay tier list</title>
+  <meta name="description" content="Rank every one of Obliviosa's cosplays from S to F.">
+  <meta property="og:title" content="Obliviosa cosplay tier list">
+  <meta property="og:description" content="Rank every one of Obliviosa's cosplays from S to F.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Shrikhand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <div>
+      <p class="sub">Obliviosa Cosplay tier list</p>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="share">Copy share link</button>
+      <button type="button" class="btn" id="reset">Reset</button>
+    </div>
+  </header>
+
+  <div class="banner" id="shared-banner" hidden>
+    <p>You're viewing someone's shared ranking.</p>
+    <div class="banner-actions">
+      <button type="button" class="btn btn-primary" id="keep-shared">Keep this ranking</button>
+      <button type="button" class="btn" id="leave-shared">Back to my ranking</button>
+    </div>
+  </div>
+
+  <main id="board">
+    <section class="tiers" id="tiers" aria-label="Tiers"></section>
+    <section class="rack" aria-labelledby="rack-title">
+      <h2 id="rack-title">Unranked <span class="rack-count" id="rack-count"></span></h2>
+      <div class="zone" data-tier="unranked" id="unranked" data-empty="Everything's ranked."></div>
+    </section>
+  </main>
+
+  <div class="sr-only" id="live" aria-live="polite"></div>
+
+  <script src="cosplays.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
